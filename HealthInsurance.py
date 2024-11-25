@@ -42,14 +42,14 @@ class HealthInsurance:
 
     def data_preparation(self, df2):
 
-        df2['age'] = self.age_scaler.fit_transform(df2[['age']])
-        df2['annual_premium'] = self.annual_premium_scaler.fit_transform(df2[['annual_premium']])
-        df2['vintage'] = self.vintage_scaler.fit_transform(df2[['vintage']])
-        df2['gender'] = self.encode_gender_scaler.fit_transform(df2[['gender']])
-        df2['vehicle_damage_yes'] = self.encode_vehicle_damage.fit_transform(df2[['vehicle_damage']])     
-        df2['vehicle_age_numeric'] = df2['vehicle_age'].map(self.encode_vehicle_age)    
-        df2.loc[:,'region_code'] = df2['region_code'].map(self.target_region_code_scaler)               
-        df2.loc[:,'policy_sales_channel'] = df2['policy_sales_channel'].map(self.target_policy_sales_channel_scaler)             
+        df2['age'] = self.age_scaler.transform(df2[['age']])
+        df2['annual_premium'] = self.annual_premium_scaler.transform(df2[['annual_premium']])
+        df2['vintage'] = self.vintage_scaler.transform(df2[['vintage']])
+        df2['gender'] = self.encode_gender_scaler.transform(df2[['gender']])
+        df2['vehicle_damage_yes'] = self.encode_vehicle_damage.transform(df2[['vehicle_damage']])     
+        df2['vehicle_age_numeric'] = df2['vehicle_age'].map(self.encode_vehicle_age).fillna(-1)
+        df2.loc[:,'region_code'] = df2['region_code'].map(self.target_region_code_scaler).fillna(-1)       
+        df2.loc[:,'policy_sales_channel'] = df2['policy_sales_channel'].map(self.target_policy_sales_channel_scaler).fillna(-1)       
         cols_selected = ['vintage', 'annual_premium', 'age', 'region_code', 'vehicle_damage_yes', 
                             'policy_sales_channel', 'previously_insured']
 
