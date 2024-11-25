@@ -9,6 +9,10 @@ model = pickle.load(open('final_lgbm_model.pkl', 'rb'))
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "API is running. Use the /predict endpoint for predictions."
+
 @app.route('/predict', methods = ['POST'])
 def health_insurance_predict():
     test_json = request.get_json()
